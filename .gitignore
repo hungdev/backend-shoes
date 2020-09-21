@@ -1,0 +1,24 @@
+node_modules
+database
+.vscode
+yarn.lock
+yarn-error.log
+package-lock.json
+client/node_modules
+client/yarn-error.log
+client/yarn.lock
+client/build
+client/.env.development
+server/node_modules
+server/package-lock.json
+server/yarn-error.log
+server/yarn.lock
+server/logs/*
+server/.env
+.idea
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.env
+logs/*

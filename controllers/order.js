@@ -1,25 +1,22 @@
 // http://www.codingpedia.org/ama/cleaner-code-in-nodejs-with-async-await-mongoose-calls-example#before
 const mongoose = require("mongoose");
 const fs = require("fs")
-const Category = require("../models/category");
+const Order = require("../models/order");
+const OrderItem = require("../models/orderItem");
 const Product = require("../models/product");
 const _ = require('lodash')
 
 //https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
-exports.getCategories = async (req, res, next) => {
+exports.getOrders = async (req, res, next) => {
   let criteria = {}
-  // if (mongoose.Types.ObjectId.isValid(req.query.user_id)) {
-  //   criteria.userID = mongoose.Types.ObjectId(req.query.user_id)
-  // }
-  // skip: lấy từ phần tử số skip đó trở đi
   try {
     const limit = parseInt(req.query.limit, 0) || 10;
     const skip = parseInt(req.query.skip, 0) || 0;
-    const categoryResult = await Category.find(criteria).skip(skip).limit(limit).sort({ name: 1 }) // sort theo title
+    const result = await Order.find(criteria).skip(skip).limit(limit).sort({ name: 1 }) // sort theo title
     res.status(200).json({
       result: "ok",
-      data: categoryResult,
-      count: categoryResult.length,
+      data: result,
+      count: result.length,
       message: "Query list of posts successfully"
     })
   } catch (err) {
@@ -29,25 +26,50 @@ exports.getCategories = async (req, res, next) => {
   }
 };
 
-exports.createCategory = (req, res, next) => {
-  const category = new Category({
+exports.getOrderDetail = async (req, res, next) => {
+  try {
+    const order = await OrderItem.find({ orderId: req.params.orderId })
+      // .populate({ path: 'productId', select: 'name' })
+      .populate({ path: 'productId' })
+      .exec();
+    res.json({
+      result: "ok",
+      data: order,
+      message: "Query list successfully"
+    });
+  } catch (error) {
+    res.json({
+      result: "failed",
+      data: [],
+      message: `Error is : ${error}`
+    });
+  }
+};
+
+exports.createOrder = async (req, res, next) => {
+  const { productList } = req.body
+  const order = new Order({
     _id: new mongoose.Types.ObjectId(),
-    name: req.body.name
+    userId: req.userData.userId
   });
-  category.save((err) => {
-    if (err) {
-      res.json({
-        result: "failed",
-        data: {},
-        message: `Error is : ${err}`
-      });
-    } else {
-      res.json({
-        result: "ok",
-        message: "Insert new category successfully"
-      });
-    }
-  });
+
+  try {
+    const createOrder = await order.save()
+    const orderItemList = productList.map(e => ({
+      userId: req.userData.userId,
+      productId: e.productId,
+      orderId: createOrder._id,
+      quantity: e.quantity
+    }))
+    const createOrderItem = await OrderItem.insertMany(orderItemList)
+    res.status(200).json({
+      result: "ok",
+      data: createOrderItem,
+      message: "create successfully"
+    })
+  } catch (error) {
+
+  }
 };
 
 exports.category_delete = (req, res, next) => {

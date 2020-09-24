@@ -9,11 +9,17 @@ var OrderItemSchema = new Schema({
   },
   productId: {
     type: String,
-    required: true
+    required: true,
+    ref: 'Product'
   },
   orderId: {
     type: String,
-    required: true
+    required: true,
+    ref: 'Order'
+  },
+  quantity: {
+    type: Number,
+    default: 1
   },
   createdDate: {
     type: Date,

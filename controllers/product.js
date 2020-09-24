@@ -31,7 +31,7 @@ exports.getProducts = async (req, res, next) => {
   }
 }
 
-exports.product_detail = async (req, res, next) => {
+exports.productDetail = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.productId).exec();
     res.json({
@@ -48,9 +48,10 @@ exports.product_detail = async (req, res, next) => {
   }
 }
 
-exports.create_product = (req, res, next) => {
-
-  if (!mongoose.Types.ObjectId.isValid(req.body.categoryId)) {
+exports.createProduct = (req, res, next) => {
+  const { name, categoryId, price, status, accessories, promotion, details, isStock, isNewArrival, genderId, size } = req.body
+  // console.log('aaaa', req.files)
+  if (!mongoose.Types.ObjectId.isValid(categoryId)) {
     return res.json({
       result: "failed",
       data: {},
@@ -60,16 +61,18 @@ exports.create_product = (req, res, next) => {
 
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    category_id: mongoose.Types.ObjectId(req.body.categoryId),
-    price: req.body.price,
-    status: req.body.status,
-    accessories: req.body.accessories,
-    promotion: req.body.promotion,
-    details: req.body.details,
-    is_stock: req.body.isStock,
-    is_featured: req.body.isFeatured,
-    image: _.get(req, 'file.path', '')
+    name: name,
+    genderId: mongoose.Types.ObjectId(genderId),
+    categoryId: mongoose.Types.ObjectId(categoryId),
+    size: size,
+    price: price,
+    status: status,
+    accessories: accessories,
+    promotion: promotion,
+    details: details,
+    isStock: isStock,
+    isNewArrival: isNewArrival,
+    images: req.files.map(e => e.path)
   });
   product.save((err) => {
     if (err) {

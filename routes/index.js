@@ -4,6 +4,9 @@ router = require('./users');
 router = require('./product');
 router = require('./category');
 router = require('./comment');
+router = require('./gender');
+router = require('./order');
+// router = require('./oderItem');
 // router = require('./sendMail');
 
 /* GET home page. */

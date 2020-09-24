@@ -5,9 +5,9 @@ var router = global.router;
 
 router.get("/get-products", ProductController.getProducts);
 
-router.get("/product/:productId", ProductController.product_detail);
+router.get("/product/:productId", ProductController.productDetail);
 
-router.post("/create-product", upload.single('imageUrl'), ProductController.create_product);
+router.post("/create-product", upload.array('images', 10), ProductController.createProduct);
 
 router.delete("/product/:productId", ProductController.product_delete);
 

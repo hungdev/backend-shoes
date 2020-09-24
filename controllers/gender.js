@@ -1,12 +1,12 @@
 // http://www.codingpedia.org/ama/cleaner-code-in-nodejs-with-async-await-mongoose-calls-example#before
 const mongoose = require("mongoose");
 const fs = require("fs")
-const Category = require("../models/category");
+const Gender = require("../models/gender");
 const Product = require("../models/product");
 const _ = require('lodash')
 
 //https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
-exports.getCategories = async (req, res, next) => {
+exports.getGenders = async (req, res, next) => {
   let criteria = {}
   // if (mongoose.Types.ObjectId.isValid(req.query.user_id)) {
   //   criteria.userID = mongoose.Types.ObjectId(req.query.user_id)
@@ -15,11 +15,11 @@ exports.getCategories = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit, 0) || 10;
     const skip = parseInt(req.query.skip, 0) || 0;
-    const categoryResult = await Category.find(criteria).skip(skip).limit(limit).sort({ name: 1 }) // sort theo title
+    const genderResult = await Gender.find(criteria).skip(skip).limit(limit).sort({ name: 1 }) // sort theo title
     res.status(200).json({
       result: "ok",
-      data: categoryResult,
-      count: categoryResult.length,
+      data: genderResult,
+      count: genderResult.length,
       message: "Query list of posts successfully"
     })
   } catch (err) {
@@ -29,12 +29,12 @@ exports.getCategories = async (req, res, next) => {
   }
 };
 
-exports.createCategory = (req, res, next) => {
-  const category = new Category({
+exports.createGender = (req, res, next) => {
+  const gender = new Gender({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name
   });
-  category.save((err) => {
+  gender.save((err) => {
     if (err) {
       res.json({
         result: "failed",
@@ -44,14 +44,14 @@ exports.createCategory = (req, res, next) => {
     } else {
       res.json({
         result: "ok",
-        message: "Insert new category successfully"
+        message: "Insert new gender successfully"
       });
     }
   });
 };
 
-exports.category_delete = (req, res, next) => {
-  Category.findOneAndRemove({ _id: mongoose.Types.ObjectId(req.params.categoryId) }, (err) => {
+exports.deleteGender = (req, res, next) => {
+  Gender.findOneAndRemove({ _id: mongoose.Types.ObjectId(req.params.categoryId) }, (err) => {
     if (err) {
       res.json({
         result: "failed",

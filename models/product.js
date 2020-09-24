@@ -11,9 +11,12 @@ var ProductSchema = new Schema({
     type: String,
     required: true
   },
-  image: {
-    type: String
+  images: [String],
+  genderId: {
+    type: String,
+    required: true
   },
+  size: [String],
   price: {
     type: String
   },

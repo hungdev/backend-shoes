@@ -29,6 +29,12 @@ var ProductSchema = new Schema({
   promotion: {
     type: String
   },
+  star: {
+    type: Number,
+  },
+  discount: {
+    type: Number,
+  },
   details: {
     type: String
   },

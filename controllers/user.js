@@ -123,7 +123,7 @@ exports.userLogin = async (req, res, next) => {
     })
   } catch (error) {
     res.status(500).json({
-      error: err
+      error: error
     });
   }
 }

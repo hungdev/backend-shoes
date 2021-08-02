@@ -12,7 +12,7 @@ var app = express();
 // Connect DB:
 var mongoose = require('mongoose');
 let options = {
-  db: { native_parser: true },
+  db: { useNewUrlParser: true, useUnifiedTopology: true },
   server: { poolSize: 5 },
   user: 'hungvu',
   pass: 'vuhung'

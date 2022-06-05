@@ -6,6 +6,7 @@ router = require('./category');
 router = require('./comment');
 router = require('./gender');
 router = require('./order');
+router = require('./brand');
 // router = require('./oderItem');
 // router = require('./sendMail');
 

@@ -20,7 +20,7 @@ let options = {
 };
 // Use native Promises
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/ecommerceDB', options).then(
+mongoose.connect('mongodb://localhost:27017/shoesDB', options).then(
   () => {
     console.log("connect DB successfully");
   },

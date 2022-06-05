@@ -51,19 +51,19 @@ exports.createBrand = (req, res, next) => {
 };
 
 exports.deleteBrand = (req, res, next) => {
-  Brand.findOneAndRemove({ _id: mongoose.Types.ObjectId(req.params.categoryId) }, (err) => {
+  Brand.findOneAndRemove({ _id: mongoose.Types.ObjectId(req.params.brandId) }, (err) => {
     if (err) {
       res.json({
         result: "failed",
-        message: `Cannot delete category with Id: ${req.params.categoryId}. Error is : ${err}`
+        message: `Cannot delete category with Id: ${req.params.brandId}. Error is : ${err}`
       });
       return;
     }
-    Product.deleteMany({ category_id: { $in: req.params.categoryId } }, (err, response) => {
+    Product.deleteMany({ category_id: { $in: req.params.brandId } }, (err, response) => {
       if (err) {
         res.json({
           result: "failed",
-          message: `Cannot delete Product with Id: ${req.params.categoryId}. Error is : ${err}`
+          message: `Cannot delete Product with Id: ${req.params.brandId}. Error is : ${err}`
         });
         return;
       }

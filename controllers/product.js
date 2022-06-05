@@ -49,7 +49,7 @@ exports.productDetail = async (req, res, next) => {
 };
 
 exports.createProduct = (req, res, next) => {
-  const { name, categoryId, price, status, accessories, promotion, details, isStock, isNewArrival, genderId, size, discount, star } = req.body;
+  const { name, categoryId, price, status, accessories, promotion, details, isStock, isNewArrival, genderId, size, discount, star, brandId } = req.body;
   // console.log('aaaa', req.files)
   if (!mongoose.Types.ObjectId.isValid(categoryId)) {
     return res.json({
@@ -74,6 +74,7 @@ exports.createProduct = (req, res, next) => {
     isNewArrival: isNewArrival,
     discount: discount,
     star: star,
+    brandId: brandId,
     images: req.files.map(e => e.path)
   });
   product.save((err) => {

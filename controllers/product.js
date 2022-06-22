@@ -18,7 +18,7 @@ exports.getProducts = async (req, res, next) => {
     const limit = parseInt(req.query.limit, 0) || 10;
     const skip = parseInt(req.query.skip, 0) || 0;
     // const productRs = await Product.find(requestQuery).skip(skip).limit(limit).sort({ name: 1 }); // sort theo name
-    const productRs = await Product.find(requestQuery); // sort theo name
+    const productRs = await Product.find({ name: 'Air Jordan 1 Zoom Cmft' }); // sort theo name
     console.log('productRs', productRs);
     // .select("title content location created_date user_id image_url likes")
     res.status(200).json({

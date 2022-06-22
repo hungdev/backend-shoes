@@ -10,6 +10,7 @@ const omitEmpty = require('omit-empty');
 //https://stackoverflow.com/questions/33627238/mongoose-find-with-multiple-conditions
 exports.getProducts = async (req, res, next) => {
   const requestQuery = omitEmpty(req.query);
+  console.log('requestQuery', requestQuery);
   // const criteria = _.pick(requestQuery, ['isNewArrival', 'name', 'categoryId', 'isStock'])
 
   // skip: lấy từ phần tử số skip đó trở đi

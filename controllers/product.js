@@ -16,7 +16,7 @@ exports.getProducts = async (req, res, next) => {
   }
   // skip: lấy từ phần tử số skip đó trở đi
   try {
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 100;
     const skip = parseInt(req.query.skip) || 0;
     const productRs = await Product.find(requestQuery).skip(skip).limit(limit).sort({ name: 1 }); // sort theo name
     console.log('productRs', productRs);
